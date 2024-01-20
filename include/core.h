@@ -22,9 +22,9 @@ typedef buffer variant_b;
 
 // fragment buffer
 // stocke l'id du triangle affiché dans ce pixel
-// si le pixel n'est pas occupé l'id est fixé à empty_frag_id
+// si le pixel n'est pas occupé l'id est fixé à EMPTY_FRAG_ID
 typedef uint16_buffer fragment_b;
-const u_int16_t empty_frag_id = 0xffff;
+const u_int16_t EMPTY_FRAG_ID = 0xffff;
 
 // depth buffer
 // stocke la profondeur de chaque px de l'écran
@@ -45,5 +45,8 @@ typedef void (*vertex_shader_t)(vertex_data_b vertex_data, uniforms_t uniforms, 
 
 // fragment shader (voir OpenGL)
 typedef void (*fragment_shader_t)(vertex_b vertex, variant_b variant, pixel_b pixel);
+
+
+
 
 #endif
