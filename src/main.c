@@ -1,4 +1,4 @@
-#include <math.h>
+#include <mymath.h>
 #include "../debug/debug.c"
 #include <stdio.h>
 
