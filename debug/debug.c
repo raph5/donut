@@ -11,3 +11,11 @@ void print_mat4(mat4_t mat) {
     printf("|\n");
   }
 }
+
+void triangle_vertex_shader(vertex_data_b vertex_data, uniforms_t uniforms, vertex_b vertex, variant_b variant) {}
+
+void triangle_fragment_shader(vertex_b vertex, variant_b variant, pixel_b pixel) {}
+
+void create_triangle() {
+  
+}

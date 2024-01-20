@@ -1,10 +1,26 @@
-#include <mymath.h>
-#include "../debug/debug.c"
+#include <render.h>
+#include <canvas.h>
 #include <stdio.h>
+#include "../debug/debug.c"
 
 int main() {
-  mat4_t mat = create_mat4();
-  mat[5] = 5.7;
-  print_mat4(mat);
+
+  int width;
+  int height;
+  
+  init_cnv(&width, &height);
+
+  pixel_b pixel_buffer = create_buffer(width*height, 1);
+  init_renderer(NULL, NULL, pixel_buffer, width, height);
+
+  while(!key_pressed()) {
+    render();
+    update_cnv(pixel_buffer, width, height);
+  }
+
+  end_cnv();
+  free_buffer(pixel_buffer);
+  destroy_renderer();
+
   return 0;
 }
