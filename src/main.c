@@ -1,7 +1,8 @@
 #include <render.h>
 #include <canvas.h>
 #include <stdio.h>
-#include "../debug/debug.c"
+#include <mesh.h>
+#include <donut.h>
 
 int main() {
 
@@ -10,17 +11,21 @@ int main() {
   
   init_cnv(&width, &height);
 
-  pixel_b pixel_buffer = create_buffer(width*height, 1);
-  init_renderer(NULL, NULL, pixel_buffer, width, height);
+  Mesh mesh = create_donut(4, 2, 32, 18);
+  Camera camera = create_orthographic_camera(width/height*0.35);
+  Renderer renderer = create_renderer(&mesh, &camera, width, height);
 
   while(!key_pressed()) {
-    render();
-    update_cnv(pixel_buffer, width, height);
+    render(&renderer, &mesh, &camera);
+    update_cnv(renderer.pixel_b, width, height);
+
+    mesh.ry += 0.001;
+    update_matrix(&mesh);
   }
 
   end_cnv();
-  free_buffer(pixel_buffer);
-  destroy_renderer();
+  free_donut(mesh);
+  free_renderer(renderer);
 
   return 0;
 }

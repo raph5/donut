@@ -1,4 +1,6 @@
 
 # build files
 obj
-donut
+
+# core files
+core.donut

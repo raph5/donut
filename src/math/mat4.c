@@ -2,29 +2,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// create mat4 on the heap
-// do not init the matrix values !
-mat4_t create_mat4() {
-  mat4_t mat = (float*) malloc(sizeof(int) * 16);
-  
-  if(mat == NULL) {
-    printf("mat4 malloc error");
-    abort();
+// copy mat to dest
+void copy_mat4(mat4_t mat, mat4_t dest) {
+  for(int i=0; i<8; i++) {
+    ((long*) dest)[i] = ((long*) mat)[i];
   }
-
-  return mat;
-}
-
-// free mat4 from heap
-void free_mat4(mat4_t mat) {
-  free(mat);
 }
 
 // set mat to unit matrix
 void set_unit_mat4(mat4_t mat) {
   for(int i=0; i<4; i++) {
     for(int j=0; j<4; j++) {
-      mat[i] = j == i ? 1 : 0;
+      mat[(i << 2) + j] = j == i ? 1 : 0;
     }
   }
 }
@@ -43,7 +32,7 @@ void mult_mat4(mat4_t mat1, mat4_t mat2, mat4_t result) {
       result[(i << 2) + j] = 0;
       
       for(int k=0; k<4; k++) {
-        result[(i << 2) + j] += mat1[(i << 2) + j+k] + mat2[((i+k) << 2) + j];
+        result[(i << 2) + j] += mat1[(i << 2) + k] * mat2[(k << 2) + j];
       }
     }
   }
@@ -55,7 +44,7 @@ void mult_vec4_mat4(vec4_t vec, mat4_t mat, vec4_t result) {
     result[i] = 0;
 
     for(int j=0; j<4; j++) {
-      result[i] += vec[i] * mat[(i << 2) + j];
+      result[i] += vec[j] * mat[(i << 2) + j];
     }
   }
 }
@@ -66,9 +55,20 @@ void mult_vec4_mat4_local(vec4_t vec, mat4_t mat) {
     acc = 0;
 
     for(int j=0; j<4; j++) {
-      acc += vec[i] * mat[(i << 2) + j];
+      acc += vec[j] * mat[(i << 2) + j];
     }
 
     vec[i] = acc;
+  }
+}
+
+// multiply vec3 by mat4
+void mult_vec3_mat4(vec3_t vec, mat4_t mat, float fourth_value, vec3_t result) {
+  for(int i=0; i<3; i++) {
+    result[i] = fourth_value * mat[(i << 2) + 3];
+
+    for(int j=0; j<3; j++) {
+      result[i] += vec[j] * mat[(i << 2) + j];
+    }
   }
 }

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-buffer_t create_buffer(int length, int size) {
-  buffer_t buffer = malloc(length*size);
+void *create_buffer(int length, int size) {
+  void *buffer = malloc(length*size);
 
   if(buffer == NULL) {
     printf("buffer malloc error");
@@ -11,8 +11,4 @@ buffer_t create_buffer(int length, int size) {
   }
 
   return buffer;
-}
-
-void free_buffer(buffer_t buffer) {
-  free(buffer);
 }

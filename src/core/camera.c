@@ -1,28 +1,11 @@
 #include <camera.h>
-#include <stdlib.h>
-#include <stdio.h>
 
-Camera *create_camera() {
-  Camera *camera = malloc(sizeof(Camera));
+Camera create_orthographic_camera(float aspect_ratio) {
+  Camera camera;
+
+  set_orthographic_projection_matrix(camera.proj_matrix, -10*aspect_ratio, 10*aspect_ratio, -10/aspect_ratio, 10/aspect_ratio, -10, 10);
   
-  if(camera == NULL) {
-    printf("camera malloc error");
-    abort();
-  }
-
-  mat4_t matrix = create_mat4();
-  camera->proj_matrix = matrix;
-
   return camera;
-}
-
-void free_camera(Camera *camera) {
-  free(camera->proj_matrix);
-  free(camera);
-}
-
-void init_camera(Camera *camera) {
-  set_orthographic_projection_matrix(camera->proj_matrix, -10, 10, -10, 10, -10, 10);
 }
 
 void set_orthographic_projection_matrix(mat4_t matrix, float left, float right, float bottom, float top, float near, float far) {

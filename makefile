@@ -11,7 +11,7 @@ SRC_DIRS = $(shell find $(SRCDIR) -type d)
 INC_DIRS = $(shell find $(INCDIR) -type d | sed 's/^/-I/')
 
 # Compilation
-CFLAGS = $(INC_DIRS) -lncurses
+CFLAGS = $(INC_DIRS) -lncurses -lm
 TARGET = donut
 
 # Fichiers à compler

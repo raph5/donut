@@ -9,16 +9,25 @@ typedef struct Mesh_s Mesh;
 struct Mesh_s {
   vertex_shader_t vertex_shader;
   fragment_shader_t fragment_shader;
-  index_b index;
+
+  index_t index;
   int index_length;  // nombre de triangles
-  vertex_data_b vertex_data;
+  vertex_data_t vertex_data;
   int vertex_length;  // nombre de vertices
-  int vertex_size;  // nombre d'octés occupés par un vertex dans le vertex data buffer
-  int variant_size;  // nombre d'octés occupes pas les variants d'un même vertex dans le variant buffer
+
+  float x;  // position
+  float y;
+  float z;
+  float rx;  // euler rotation
+  float ry;
+  float rz;
+  float scale;  // scale
+
   mat4_t matrix;  // matrice de tranformation
+  mat4_t rotation_matrix;  // matrice de rotation
 };
 
-Mesh *create_mesh(void);
-void free_mesh(Mesh *mesh_p);
+void init_mesh_pos(Mesh *mesh);
+void update_matrix(Mesh *mesh);
 
 #endif
