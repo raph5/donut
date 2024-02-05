@@ -104,9 +104,9 @@ void render(Renderer *renderer, Mesh *mesh, Camera *camera) {
         depth_vec[0] = renderer->vertex_b[i1][2];
         depth_vec[1] = renderer->vertex_b[i2][2];
         depth_vec[2] = renderer->vertex_b[i3][2];
-        interpolation_vec[0] = sqrt(square(_y - renderer->vertex_b[i1][1]) + square(_x - renderer->vertex_b[i1][0]));
-        interpolation_vec[1] = sqrt(square(_y - renderer->vertex_b[i2][1]) + square(_x - renderer->vertex_b[i2][0]));
-        interpolation_vec[2] = sqrt(square(_y - renderer->vertex_b[i3][1]) + square(_x - renderer->vertex_b[i3][0]));
+        interpolation_vec[0] = 1 / sqrt(square(_y - renderer->vertex_b[i1][1]) + square(_x - renderer->vertex_b[i1][0]));
+        interpolation_vec[1] = 1 / sqrt(square(_y - renderer->vertex_b[i2][1]) + square(_x - renderer->vertex_b[i2][0]));
+        interpolation_vec[2] = 1 / sqrt(square(_y - renderer->vertex_b[i3][1]) + square(_x - renderer->vertex_b[i3][0]));
         mult_vec3_float(interpolation_vec, 1/(interpolation_vec[0] + interpolation_vec[1] + interpolation_vec[2]));
         depth = dot_product_vec3(interpolation_vec, depth_vec);
 
@@ -132,6 +132,10 @@ void render(Renderer *renderer, Mesh *mesh, Camera *camera) {
           normal_vec[1] = renderer->variant_b[i2].normal[2];  
           normal_vec[2] = renderer->variant_b[i3].normal[2];
           renderer->fragment_variant_b[px_index].normal[2] = dot_product_vec3(interpolation_vec, normal_vec);
+          
+          // renderer->fragment_variant_b[px_index].normal[0] = normal_vec[0] = renderer->variant_b[i1].normal[0];
+          // renderer->fragment_variant_b[px_index].normal[1] = normal_vec[0] = renderer->variant_b[i1].normal[1];
+          // renderer->fragment_variant_b[px_index].normal[2] = normal_vec[0] = renderer->variant_b[i1].normal[2];
         }
       }
     }
