@@ -25,13 +25,13 @@ $(shell mkdir -p $(OBJDIR))
 
 # Règle pour nettoyer le projet
 clean:
-	rm -rf $(OBJDIR) donut
+	rm -rf $(OBJDIR) $(TARGET)
 
 
 # Règle pour construire le projet
 build: $(OBJ)
 	@echo "Construction du projet..."
-	gcc $(OBJ) $(CFLAGS) -o donut
+	gcc $(OBJ) $(CFLAGS) -o $(TARGET)
 
 
 
